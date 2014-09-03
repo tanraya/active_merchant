@@ -10,7 +10,7 @@ module ActiveMerchant #:nodoc:
         autoload :Notification, File.dirname(__FILE__) + '/qiwi/notification.rb'
 
         mattr_accessor :service_url
-        self.service_url = 'https://w.qiwi.ru/payments.action'
+        self.service_url = 'https://w.qiwi.com/order/external/create.action'
 
         def self.helper(order, account, options = {})
           Helper.new(order, account, options)

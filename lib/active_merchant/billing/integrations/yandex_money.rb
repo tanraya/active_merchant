@@ -1,35 +1,43 @@
-require File.dirname(__FILE__) + '/yandex_money/helper.rb'
-require File.dirname(__FILE__) + '/yandex_money/notification.rb'
-
 module ActiveMerchant #:nodoc:
   module Billing #:nodoc:
     module Integrations #:nodoc:
       module YandexMoney
+        autoload :Helper, File.dirname(__FILE__) + '/yandex_money/helper.rb'
+        autoload :Notification, File.dirname(__FILE__) + '/yandex_money/notification.rb'
+        autoload :Return, File.dirname(__FILE__) + '/yandex_money/return.rb'
+        autoload :Common, File.dirname(__FILE__) + '/yandex_money/common.rb'
 
-        # Start integration with yandex.money here: 
-        # https://money.yandex.ru/start/
+        mattr_accessor :test_url
+        self.test_url = 'http://demomoney.yandex.ru/eshop.xml'
 
-        # Shop example:
-        # https://github.com/yandex-money/shopify-active-merchant-shop-example
+        mattr_accessor :production_url
+        self.production_url = 'http://money.yandex.ru/eshop.xml'
 
-        mattr_accessor :production_url, :test_url
-
-        self.production_url = 'https://money.yandex.ru/eshop.xml'
-        self.test_url = 'https://demomoney.yandex.ru/eshop.xml'
+        mattr_accessor :signature_parameter_name
+        self.signature_parameter_name = 'md5'
 
         def self.service_url
-          case ActiveMerchant::Billing::Base.integration_mode
-          when :production
-            self.production_url
-          when :test
-            self.test_url
-          else
-            raise StandardError, "Integration mode set to an invalid value: #{mode}"
+          mode = ActiveMerchant::Billing::Base.integration_mode
+          case mode
+            when :production
+              self.production_url
+            when :test
+              self.test_url
+            else
+              raise StandardError, "Integration mode set to an invalid value: #{mode}"
           end
         end
 
-        def self.notification(post)
-          Notification.new(post)
+        def self.helper(order, account, options = {})
+          Helper.new(order, account, options)
+        end
+
+        def self.notification(query_string, options = {})
+          Notification.new(query_string, options)
+        end
+
+        def self.return(query_string, options = {})
+          Return.new(query_string, options)
         end
       end
     end

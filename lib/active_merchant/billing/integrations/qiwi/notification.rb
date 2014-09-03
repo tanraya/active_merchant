@@ -29,10 +29,6 @@ module ActiveMerchant #:nodoc:
             params['txn_id']
           end
 
-          def currency
-            'RUR'
-          end
-
           def received_at
             params['txn_date']
           end
@@ -45,7 +41,12 @@ module ActiveMerchant #:nodoc:
             params['command']
           end
 
+          def content_id
+            params['content_id']
+          end
+
           def acknowledge
+            # TODO: request IP-address check
             true
           end
 
@@ -53,20 +54,16 @@ module ActiveMerchant #:nodoc:
             'application/xml'
           end
 
-          @@response_codes = {
-              :fatal_error => 300,
-              :invoice_not_found => 5,
-              :error => 1,
-              :ok => 0
-          }
+          @@response_codes = {:fatal_error => 300, :error => 1, :ok => 0}
 
           def response(response_code, options = {})
+            @billing_payment = options[:payment]
             <<-XML
 <?xml version="1.0" encoding="UTF-8"?>
 <response>
   <osmp_txn_id>#{transaction_id}</osmp_txn_id>
-  <prv_txn>#{item_id}</prv_txn>
-  <sum>#{gross}</sum>
+  <prv_txn>#{@billing_payment.id if @billing_payment}</prv_txn>
+  <sum>#{@billing_payment.amount if @billing_payment}</sum>
   <result>#{response_code}</result>
   <comment>#{options[:description]}</comment>
 </response>
