@@ -6,9 +6,6 @@ module ActiveMerchant #:nodoc:
     module Integrations #:nodoc:
       module Qiwi
 
-        autoload :Helper, File.dirname(__FILE__) + '/qiwi/helper.rb'
-        autoload :Notification, File.dirname(__FILE__) + '/qiwi/notification.rb'
-
         mattr_accessor :service_url
         self.service_url = 'https://w.qiwi.com/order/external/create.action'
 
@@ -16,8 +13,8 @@ module ActiveMerchant #:nodoc:
           Helper.new(order, account, options)
         end
 
-        def self.notification(query_string, options = {})
-          Notification.new(query_string, options)
+        def self.notification(post)
+          Notification.new(post)
         end
       end
     end
