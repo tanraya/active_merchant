@@ -1,10 +1,10 @@
 require 'test_helper'
 
-class KiwiHelperTest < Test::Unit::TestCase
+class QiwiHelperTest < Test::Unit::TestCase
   include ActiveMerchant::Billing::Integrations
 
   def setup
-    @helper = Kiwi::Helper.new('order-500','cody@example.com', :amount => 500, :currency => 'USD')
+    @helper = Qiwi::Helper.new('order-500','cody@example.com', :amount => 500, :currency => 'USD')
   end
 
   def test_basic_helper_fields

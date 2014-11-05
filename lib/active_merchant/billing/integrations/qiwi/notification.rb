@@ -58,14 +58,14 @@ module ActiveMerchant #:nodoc:
             params['status']
           end
 
-          # Acknowledge the transaction to Kiwi. This method has to be called after a new
-          # apc arrives. Kiwi will verify that all the information we received are correct and will return a
+          # Acknowledge the transaction to Qiwi. This method has to be called after a new
+          # apc arrives. Qiwi will verify that all the information we received are correct and will return a
           # ok or a fail.
           #
           # Example:
           #
           #   def ipn
-          #     notify = KiwiNotification.new(request.raw_post)
+          #     notify = QiwiNotification.new(request.raw_post)
           #
           #     if notify.acknowledge
           #       ... process order ... if notify.complete?
@@ -75,7 +75,7 @@ module ActiveMerchant #:nodoc:
           def acknowledge(authcode = nil)
             payload = raw
 
-            uri = URI.parse(Kiwi.notification_confirmation_url)
+            uri = URI.parse(Qiwi.notification_confirmation_url)
 
             request = Net::HTTP::Post.new(uri.path)
 
@@ -90,7 +90,7 @@ module ActiveMerchant #:nodoc:
             response = http.request(request, payload)
 
             # Replace with the appropriate codes
-            raise StandardError.new("Faulty Kiwi result: #{response.body}") unless ["AUTHORISED", "DECLINED"].include?(response.body)
+            raise StandardError.new("Faulty Qiwi result: #{response.body}") unless ["AUTHORISED", "DECLINED"].include?(response.body)
             response.body == "AUTHORISED"
           end
 
