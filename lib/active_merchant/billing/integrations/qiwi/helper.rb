@@ -10,7 +10,7 @@ module ActiveMerchant #:nodoc:
 
             super
 
-            add_field('to', @to.to_s.gsub /\D+/, '')
+            add_field('to', @to.to_s.gsub(/\D+/, ''))
             add_field('successUrl', @successUrl)
             add_field('failUrl', @failUrl)
           end
