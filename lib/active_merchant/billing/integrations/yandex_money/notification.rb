@@ -84,8 +84,6 @@ module ActiveMerchant #:nodoc:
               item_id
             ].inspect
 
-
-
             digest = Digest::SHA1.hexdigest([
               status,
               transaction_id,
