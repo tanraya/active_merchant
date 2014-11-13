@@ -19,7 +19,6 @@ module ActiveMerchant #:nodoc:
             add_field('short-dest', short_dest)
             add_field('paymentType', payment_type)
             add_field('targets', targets)
-            targets
           end
 
           #def notification_secret
