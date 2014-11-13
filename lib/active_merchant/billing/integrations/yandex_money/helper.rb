@@ -4,7 +4,7 @@ module ActiveMerchant #:nodoc:
       module YandexMoney
         class Helper < ActiveMerchant::Billing::Integrations::Helper
           def initialize(order, account, options = {})
-            @notification_secret = options.delete(:'notification_secret')
+            #@notification_secret = options.delete(:'notification_secret')
 
             formcomment   = options.delete(:'formcomment')
             quickpay_form = options.delete(:'quickpay-form') { |key| "shop" }
@@ -22,9 +22,9 @@ module ActiveMerchant #:nodoc:
             targets
           end
 
-          def notification_secret
-            @notification_secret
-          end
+          #def notification_secret
+          #  @notification_secret
+          #end
 
           mapping :account,     'receiver'
           mapping :amount,      'sum'

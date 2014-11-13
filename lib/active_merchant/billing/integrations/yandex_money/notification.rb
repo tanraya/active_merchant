@@ -47,9 +47,9 @@ module ActiveMerchant #:nodoc:
             params['sha1_hash']
           end
 
-          def notification_secret
-            @options['notification_secret']
-          end
+          #def notification_secret
+          #  @options['notification_secret']
+          #end
 
           # Acknowledge the transaction to YandexMoney. This method has to be called after a new
           # apc arrives. YandexMoney will verify that all the information we received are correct and will return a
@@ -70,7 +70,7 @@ module ActiveMerchant #:nodoc:
           #     render text: notify.response
           #
 
-          def acknowledge(authcode = nil)
+          def acknowledge(notification_secret)
             logger = Logger.new('/home/mmopay/current/log/active_merchant.log')
             logger.debug [
               status,
@@ -80,7 +80,7 @@ module ActiveMerchant #:nodoc:
               received_at,
               sender,
               codepro,
-              notification_secret || authcode,
+              notification_secret,
               item_id
             ].inspect
 
@@ -92,7 +92,7 @@ module ActiveMerchant #:nodoc:
               received_at,
               sender,
               codepro,
-              notification_secret || authcode,
+              notification_secret,
               item_id
             ].map(&:to_s).join('&'))
 
