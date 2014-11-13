@@ -7,12 +7,17 @@ module ActiveMerchant #:nodoc:
             @to = options.delete(:to)
             @successUrl = options.delete(:successUrl)
             @failUrl = options.delete(:failUrl)
+            @provider = options.delete(:provider)
 
             super
 
             add_field('to', @to.to_s.gsub(/\D+/, ''))
             add_field('successUrl', @successUrl)
             add_field('failUrl', @failUrl)
+          end
+
+          def provider
+            @provider
           end
 
           #def to
