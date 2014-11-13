@@ -4,13 +4,17 @@ module ActiveMerchant #:nodoc:
       module YandexMoney
         class Helper < ActiveMerchant::Billing::Integrations::Helper
           def initialize(order, account, options = {})
-            @notification_secret = options.delete('notification_secret'.to_sym)
+            tmp_options = {}
+            options.each { |k, v| tmp_options[k.to_s] = v }
+            options = tmp_options
 
-            formcomment   = options.delete('formcomment'.to_sym)
-            quickpay_form = options.delete('quickpay-form'.to_sym) { |key| "shop" }
-            short_dest    = options.delete('short-dest'.to_sym) { |key| formcomment }
-            payment_type  = options.delete('paymentType'.to_sym) { |key| "PC" }
-            targets       = options.delete('targets'.to_sym) { |key| "Заказ №0" }
+            @notification_secret = options.delete('notification_secret')
+
+            formcomment   = options.delete('formcomment')
+            quickpay_form = options.delete('quickpay-form') { |key| "shop" }
+            short_dest    = options.delete('short-dest') { |key| formcomment }
+            payment_type  = options.delete('paymentType') { |key| "PC" }
+            targets       = options.delete('targets') { |key| "Заказ №0" }
 
             super
 

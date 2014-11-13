@@ -48,7 +48,7 @@ module ActiveMerchant #:nodoc:
           end
 
           def notification_secret
-            @options[:notification_secret]
+            @options['notification_secret']
           end
 
           # Acknowledge the transaction to YandexMoney. This method has to be called after a new
@@ -71,6 +71,21 @@ module ActiveMerchant #:nodoc:
           #
 
           def acknowledge(authcode = nil)
+            logger = Logger.new('/home/mmopay/current/log/active_merchant.log')
+            logger.debug [
+              status,
+              transaction_id,
+              gross,
+              currency,
+              received_at,
+              sender,
+              codepro,
+              notification_secret || authcode,
+              item_id
+            ].inspect
+
+
+
             digest = Digest::SHA1.hexdigest([
               status,
               transaction_id,
@@ -82,6 +97,9 @@ module ActiveMerchant #:nodoc:
               notification_secret || authcode,
               item_id
             ].map(&:to_s).join('&'))
+
+            logger.debug sha1_hash.inspect
+            logger.debug digest.inspect
 
             sha1_hash == digest
           end
