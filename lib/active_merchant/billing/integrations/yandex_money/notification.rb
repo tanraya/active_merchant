@@ -71,18 +71,18 @@ module ActiveMerchant #:nodoc:
           #
 
           def acknowledge(notification_secret)
-            logger = Logger.new('/home/mmopay/current/log/active_merchant.log')
-            logger.debug [
-              status,
-              transaction_id,
-              gross,
-              currency,
-              received_at,
-              sender,
-              codepro,
-              notification_secret,
-              item_id
-            ].inspect
+            #logger = Logger.new('/home/mmopay/current/log/active_merchant.log')
+            #logger.debug [
+            #  status,
+            #  transaction_id,
+            #  gross,
+            #  currency,
+            #  received_at,
+            #  sender,
+            #  codepro,
+            #  notification_secret,
+            #  item_id
+            #].inspect
 
             digest = Digest::SHA1.hexdigest([
               status,
@@ -96,8 +96,8 @@ module ActiveMerchant #:nodoc:
               item_id
             ].map(&:to_s).join('&'))
 
-            logger.debug sha1_hash.inspect
-            logger.debug digest.inspect
+            #logger.debug sha1_hash.inspect
+            #logger.debug digest.inspect
 
             sha1_hash == digest
           end
