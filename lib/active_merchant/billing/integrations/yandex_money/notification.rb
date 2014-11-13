@@ -81,7 +81,7 @@ module ActiveMerchant #:nodoc:
               codepro,
               notification_secret || authcode,
               item_id
-            ].join('&'))
+            ].map(&:to_s).join('&'))
 
             sha1_hash == digest
           end
