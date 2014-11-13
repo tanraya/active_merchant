@@ -10,6 +10,7 @@ module ActiveMerchant #:nodoc:
             quickpay_form = options.delete('quickpay-form'.to_sym) { |key| "shop" }
             short_dest    = options.delete('short-dest'.to_sym) { |key| formcomment }
             payment_type  = options.delete('paymentType'.to_sym) { |key| "PC" }
+            targets       = options.delete('targets'.to_sym) { |key| "Заказ №0" }
 
             super
 
@@ -17,6 +18,8 @@ module ActiveMerchant #:nodoc:
             add_field('formcomment', formcomment)
             add_field('short-dest', short_dest)
             add_field('paymentType', payment_type)
+            add_field('targets', targets)
+            targets
           end
 
           def notification_secret
