@@ -3,18 +3,9 @@ module ActiveMerchant #:nodoc:
     module Integrations #:nodoc:
       module Webmoney
         class Notification < ActiveMerchant::Billing::Integrations::Notification
-          include Common
-
-          def recognizes?
-            (params.has_key?('LMI_PAYMENT_NO') && params.has_key?('LMI_PAYMENT_AMOUNT'))
-          end
 
           def amount
             BigDecimal.new(gross)
-          end
-
-          def key_present?
-            params["LMI_HASH"].present?
           end
 
           def item_id
@@ -29,16 +20,21 @@ module ActiveMerchant #:nodoc:
             params["LMI_HASH"]
           end
 
-          def secret
-            @options[:secret]
-          end
+          def acknowledge(notification_secret)
+            digest = Digest::MD5.hexdigest([
+              params['LMI_PAYEE_PURSE'],
+              gross,
+              item_id,
+              params['LMI_MODE'],
+              params['LMI_SYS_INVS_NO'],
+              params['LMI_SYS_TRANS_NO'],
+              params['LMI_SYS_TRANS_DATE'],
+              notification_secret,
+              params['LMI_PAYER_PURSE'],
+              params['LMI_PAYER_WM']
+            ].join.upcase)
 
-          def acknowledge(authcode = nil)
-            (security_key == generate_signature)
-          end
-
-          def success_response(*args)
-            {:nothing => true}
+            security_key == digest
           end
         end
       end
