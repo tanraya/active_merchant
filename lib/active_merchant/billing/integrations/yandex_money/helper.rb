@@ -12,6 +12,9 @@ module ActiveMerchant #:nodoc:
             payment_type  = options.delete(:'paymentType') { |key| "PC" }
             targets       = options.delete(:'targets') { |key| "Заказ №0" }
 
+            success_url   = options.delete(:'success_url')
+            fail_url      = options.delete(:'fail_url')
+
             super
 
             add_field('quickpay-form', quickpay_form)
@@ -19,6 +22,9 @@ module ActiveMerchant #:nodoc:
             add_field('short-dest', short_dest)
             add_field('paymentType', payment_type)
             add_field('targets', targets)
+
+            add_field('shopSuccessURL', success_url) if success_url
+            add_field('shopFailURL', fail_url) if fail_url
           end
 
           #def notification_secret
