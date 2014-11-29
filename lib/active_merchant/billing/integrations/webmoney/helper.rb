@@ -3,8 +3,6 @@ module ActiveMerchant #:nodoc:
     module Integrations #:nodoc:
       module Webmoney
         class Helper < ActiveMerchant::Billing::Integrations::Helper
-          include Common
-
           def initialize(order, account, options = {})
             @webmoney_options = options.dup
             options.delete(:description)
