@@ -32,7 +32,7 @@ module ActiveMerchant #:nodoc:
               notification_secret,
               params['LMI_PAYER_PURSE'],
               params['LMI_PAYER_WM']
-            ].join.upcase)
+            ].map(&:to_s).join).upcase
 
             security_key == digest
           end
