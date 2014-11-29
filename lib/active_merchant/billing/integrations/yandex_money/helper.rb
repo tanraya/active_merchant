@@ -23,8 +23,8 @@ module ActiveMerchant #:nodoc:
             add_field('paymentType', payment_type)
             add_field('targets', targets)
 
-            add_field('shopSuccessURL', success_url) if success_url
-            add_field('shopFailURL', fail_url) if fail_url
+            add_field('successURL', success_url) if success_url
+            add_field('failURL', fail_url) if fail_url
           end
 
           #def notification_secret
