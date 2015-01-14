@@ -43,6 +43,10 @@ module ActiveMerchant #:nodoc:
             BigDecimal.new(gross)
           end
 
+          def tax
+            BigDecimal.new(params['withdraw_amount']) - amount
+          end
+
           def sha1_hash
             params['sha1_hash']
           end

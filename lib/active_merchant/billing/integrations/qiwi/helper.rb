@@ -1,5 +1,6 @@
 require 'uri'
 
+# http://webcodingsolutions.blogspot.ru/2014/07/qiwi.html
 module ActiveMerchant #:nodoc:
   module Billing #:nodoc:
     module Integrations #:nodoc:

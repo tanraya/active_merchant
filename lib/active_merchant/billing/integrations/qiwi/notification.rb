@@ -24,12 +24,12 @@ module ActiveMerchant #:nodoc:
             BigDecimal.new(gross)
           end
 
-          def gross
-            params['amount']
+          def tax
+            0
           end
 
-          def amount
-            BigDecimal.new(gross)
+          def gross
+            params['amount']
           end
 
           def status
@@ -40,13 +40,13 @@ module ActiveMerchant #:nodoc:
             status == 'paid'
           end
 
-          def authorized?(provider, notification_secret, auth_header)
-            credentials = Base64.urlsafe_encode64([provider, notification_secret].join(':'))
+          def authorized?(shop_id, notification_password, auth_header)
+            credentials = Base64.urlsafe_encode64([shop_id, notification_password].join(':'))
             auth_header == "Basic #{credentials}"
           end
 
-          def acknowledge(provider, notification_secret, auth_header)
-            if paid? && authorized?(provider, notification_secret, auth_header)
+          def acknowledge(shop_id, notification_password, auth_header)
+            if paid? && authorized?(shop_id, notification_password, auth_header)
               @result_code = 0 # Успех
               true
             else

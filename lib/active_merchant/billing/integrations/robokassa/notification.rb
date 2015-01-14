@@ -17,6 +17,10 @@ module ActiveMerchant #:nodoc:
             BigDecimal.new(gross)
           end
 
+          def tax
+            0
+          end
+
           def item_id
             params['InvId']
           end
