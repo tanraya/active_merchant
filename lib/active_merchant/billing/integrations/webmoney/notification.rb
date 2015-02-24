@@ -25,7 +25,7 @@ module ActiveMerchant #:nodoc:
           end
 
           def acknowledge(notification_secret)
-            digest = Digest::MD5.hexdigest([
+            digest = Digest::SHA256.hexdigest([
               params['LMI_PAYEE_PURSE'],
               gross,
               item_id,
